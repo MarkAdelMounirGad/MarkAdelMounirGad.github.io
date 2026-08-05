@@ -25,11 +25,7 @@ fetch("contact.json")
 
     configurePhoto(profile.photo, profile.name);
 
-    configureLink(
-      "saveContactButton",
-      contact.vcard,
-      display.showSaveContact
-    );
+    configureSaveContact(data, display.showSaveContact);
 
     configureLink(
       "callButton",
@@ -200,4 +196,58 @@ function renderExpertise(items) {
 
     container.appendChild(badge);
   });
+}
+
+
+function configureSaveContact(data, shouldShow) {
+  const button = document.getElementById("saveContactButton");
+  if (!button) return;
+  toggleElement("saveContactButton", Boolean(shouldShow));
+  if (!shouldShow) return;
+
+  button.removeAttribute("href");
+  button.removeAttribute("download");
+  button.addEventListener("click", event => {
+    event.preventDefault();
+    const vcard = buildVcard(data);
+    const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Mark_Adel.vcf";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+}
+
+function buildVcard(data) {
+  const profile = data.profile || {};
+  const contact = data.contact || {};
+  const parts = (profile.name || "").trim().split(/\s+/);
+  const first = parts.shift() || "";
+  const last = parts.join(" ");
+  return [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `N:${escapeVcard(last)};${escapeVcard(first)};;;`,
+    `FN:${escapeVcard(profile.name)}`,
+    `ORG:${escapeVcard(profile.organization)}`,
+    `TITLE:${escapeVcard(profile.title)}`,
+    contact.phone ? `TEL;TYPE=CELL,VOICE:${escapeVcard(contact.phone)}` : "",
+    contact.email ? `EMAIL;TYPE=INTERNET:${escapeVcard(contact.email)}` : "",
+    contact.website ? `URL:${escapeVcard(contact.website)}` : "",
+    contact.linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${escapeVcard(contact.linkedin)}` : "",
+    profile.location ? `ADR;TYPE=WORK:;;;${escapeVcard(profile.location)};;;;` : "",
+    "END:VCARD"
+  ].filter(Boolean).join("\r\n") + "\r\n";
+}
+
+function escapeVcard(value) {
+  return String(value || "")
+    .replace(/\\/g, "\\\\")
+    .replace(/\n/g, "\\n")
+    .replace(/,/g, "\\,")
+    .replace(/;/g, "\\;");
 }

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Contact Card Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <main class="admin-shell">
+    <section id="loginView" class="login-card">
+      <div class="brand-mark">MA</div>
+      <p class="eyebrow">PRIVATE EDITOR</p>
+      <h1>Contact Card Admin</h1>
+      <p class="muted">This page edits your files locally. Changes become public only after you upload the downloaded files to GitHub.</p>
+
+      <form id="loginForm" class="stack">
+        <label>
+          Password
+          <input id="passwordInput" type="password" autocomplete="current-password" required>
+        </label>
+        <button class="primary-button" type="submit">Sign in</button>
+        <p id="loginMessage" class="form-message" aria-live="polite"></p>
+      </form>
+
+      <details class="first-use">
+        <summary>First time here?</summary>
+        <p>Use <strong>mark-admin</strong>, then change the password from inside the editor. This protection is only for convenience because GitHub Pages is a static site.</p>
+      </details>
+    </section>
+
+    <section id="editorView" class="editor-view is-hidden">
+      <header class="admin-header">
+        <div>
+          <p class="eyebrow">CONTACT CARD CONTROL PANEL</p>
+          <h1>Edit your public profile</h1>
+        </div>
+        <div class="header-actions">
+          <a class="ghost-button" href="index.html" target="_blank" rel="noopener">Open public page</a>
+          <button id="logoutButton" class="ghost-button" type="button">Sign out</button>
+        </div>
+      </header>
+
+      <div class="admin-grid">
+        <form id="profileForm" class="form-panel">
+          <section class="panel-section">
+            <div class="section-heading">
+              <span>01</span>
+              <div><h2>Profile</h2><p>Identity and headline information</p></div>
+            </div>
+
+            <div class="field-grid two-columns">
+              <label>Full name<input id="name" type="text"></label>
+              <label>Job title<input id="title" type="text"></label>
+              <label>Organization<input id="organization" type="text"></label>
+              <label>Location<input id="location" type="text"></label>
+            </div>
+            <label>Tagline<input id="tagline" type="text"></label>
+
+            <div class="photo-editor">
+              <div class="photo-preview-wrap">
+                <img id="photoPreview" alt="Selected profile preview">
+                <div id="photoPreviewFallback">MA</div>
+              </div>
+              <div class="photo-controls">
+                <label class="upload-button">Choose new photo<input id="photoFile" type="file" accept="image/png,image/jpeg,image/webp"></label>
+                <label>Photo path in GitHub<input id="photoPath" type="text" value="assets/images/profile.jpg"></label>
+                <p class="hint">After choosing a photo, download it below and upload it to the same GitHub path.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel-section">
+            <div class="section-heading">
+              <span>02</span>
+              <div><h2>Contact details</h2><p>Phone, messaging, and professional links</p></div>
+            </div>
+            <div class="field-grid two-columns">
+              <label>Phone<input id="phone" type="tel"></label>
+              <label>WhatsApp number<input id="whatsapp" type="text"></label>
+              <label>Email<input id="email" type="email"></label>
+              <label>LinkedIn URL<input id="linkedin" type="url"></label>
+              <label class="full-width">Website URL<input id="website" type="url"></label>
+            </div>
+          </section>
+
+          <section class="panel-section">
+            <div class="section-heading">
+              <span>03</span>
+              <div><h2>Executive profile</h2><p>About text, expertise, and CV</p></div>
+            </div>
+            <label>About<textarea id="about" rows="5"></textarea></label>
+            <label>Expertise — one item per line<textarea id="expertise" rows="6"></textarea></label>
+            <label>CV path<input id="cv" type="text"></label>
+          </section>
+
+          <section class="panel-section">
+            <div class="section-heading">
+              <span>04</span>
+              <div><h2>Visible sections</h2><p>Choose what appears publicly</p></div>
+            </div>
+            <div id="displayToggles" class="toggle-grid"></div>
+          </section>
+
+          <section class="panel-section security-section">
+            <div class="section-heading">
+              <span>05</span>
+              <div><h2>Local password</h2><p>Applies only to this browser and device</p></div>
+            </div>
+            <div class="field-grid two-columns">
+              <label>New password<input id="newPassword" type="password" minlength="6"></label>
+              <label>Confirm password<input id="confirmPassword" type="password" minlength="6"></label>
+            </div>
+            <button id="changePasswordButton" class="secondary-button" type="button">Change local password</button>
+            <p id="passwordMessage" class="form-message" aria-live="polite"></p>
+          </section>
+        </form>
+
+        <aside class="preview-panel">
+          <div class="sticky-preview">
+            <p class="eyebrow">LIVE PREVIEW</p>
+            <div class="mini-card">
+              <div class="mini-photo-wrap">
+                <img id="miniPhoto" alt="Profile preview">
+                <div id="miniFallback">MA</div>
+              </div>
+              <h2 id="miniName">Mark Adel</h2>
+              <p id="miniTitle"></p>
+              <p id="miniOrganization"></p>
+              <p id="miniLocation" class="mini-location"></p>
+              <div class="mini-actions"><span>Call</span><span>WhatsApp</span><span>Email</span><span>in</span></div>
+              <p id="miniTagline" class="mini-tagline"></p>
+            </div>
+
+            <div class="export-card">
+              <h3>Publish to GitHub</h3>
+              <p>Download the updated files, then replace the matching files in your repository.</p>
+              <button id="downloadJsonButton" class="primary-button" type="button">1. Download contact.json</button>
+              <button id="downloadVcardButton" class="secondary-button" type="button">2. Download Mark_Adel.vcf</button>
+              <button id="downloadPhotoButton" class="secondary-button" type="button" disabled>3. Download selected photo</button>
+              <button id="saveDraftButton" class="ghost-button full-button" type="button">Save draft on this device</button>
+              <button id="resetButton" class="text-button" type="button">Reload published information</button>
+              <p id="exportMessage" class="form-message" aria-live="polite"></p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <script src="admin.js"></script>
+</body>
+</html>
