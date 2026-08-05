@@ -1,6 +1,5 @@
 {
   "layout": "card",
-
   "profile": {
     "name": "Mark Adel",
     "title": "Program Director",
@@ -9,7 +8,6 @@
     "tagline": "Improving Healthcare Through Leadership",
     "photo": "assets/images/profile.jpg"
   },
-
   "contact": {
     "phone": "+254700000000",
     "whatsapp": "254700000000",
@@ -18,7 +16,6 @@
     "website": "",
     "vcard": "Mark_Adel.vcf"
   },
-
   "display": {
     "showLocation": true,
     "showTagline": true,
@@ -32,7 +29,6 @@
     "showExpertise": true,
     "showCV": true
   },
-
   "executiveProfile": {
     "about": "Program Director with experience in healthcare implementation, strategic partnerships, donor coordination, and operational leadership.",
     "expertise": [
