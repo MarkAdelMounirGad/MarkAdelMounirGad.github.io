@@ -2,27 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Digital Contact Card</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Digital contact card and professional profile"
+  >
+
+  <title>Mark Adel</title>
 
   <link rel="stylesheet" href="style.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 </head>
 
 <body>
 
-  <main class="page-shell">
+  <div class="page-background">
+    <div class="background-orb background-orb-one"></div>
+    <div class="background-orb background-orb-two"></div>
+  </div>
 
-    <section class="contact-card">
+  <main class="page-container">
 
-      <div class="ambient ambient-top"></div>
-      <div class="ambient ambient-bottom"></div>
+    <section id="contactCard" class="contact-card">
 
-      <div class="profile-section">
+      <header class="profile-header">
 
         <div class="photo-frame">
           <img
@@ -31,17 +46,29 @@
             src=""
             alt="Profile photo"
           >
+
+          <div id="photoFallback" class="photo-fallback">
+            MA
+          </div>
         </div>
 
-        <h1 id="profileName" class="profile-name"></h1>
+        <h1 id="profileName" class="profile-name">
+          Loading...
+        </h1>
 
         <p id="profileTitle" class="profile-title"></p>
 
-        <p id="profileOrganization" class="profile-organization"></p>
+        <p
+          id="profileOrganization"
+          class="profile-organization"
+        ></p>
 
-        <p id="profileLocation" class="profile-location"></p>
+        <p
+          id="profileLocation"
+          class="profile-location"
+        ></p>
 
-      </div>
+      </header>
 
       <a
         id="saveContactButton"
@@ -49,40 +76,128 @@
         href="#"
         download
       >
-        <span class="button-icon">↓</span>
-        <span>Save Contact</span>
+        <span class="save-contact-icon">＋</span>
+
+        <span>
+          <strong>Save Contact</strong>
+          <small>Add directly to your phone</small>
+        </span>
       </a>
 
-      <div class="action-grid">
+      <div id="actionGrid" class="action-grid">
 
-        <a id="callButton" class="action-card" href="#">
+        <a
+          id="callButton"
+          class="action-button"
+          href="#"
+        >
           <span class="action-icon">☎</span>
           <span class="action-label">Call</span>
         </a>
 
-        <a id="whatsappButton" class="action-card" href="#" target="_blank" rel="noopener">
+        <a
+          id="whatsappButton"
+          class="action-button"
+          href="#"
+          target="_blank"
+          rel="noopener"
+        >
           <span class="action-icon">◉</span>
           <span class="action-label">WhatsApp</span>
         </a>
 
-        <a id="emailButton" class="action-card" href="#">
+        <a
+          id="emailButton"
+          class="action-button"
+          href="#"
+        >
           <span class="action-icon">✉</span>
           <span class="action-label">Email</span>
         </a>
 
-        <a id="linkedinButton" class="action-card" href="#" target="_blank" rel="noopener">
+        <a
+          id="linkedinButton"
+          class="action-button"
+          href="#"
+          target="_blank"
+          rel="noopener"
+        >
           <span class="action-icon linkedin-icon">in</span>
           <span class="action-label">LinkedIn</span>
         </a>
 
-        <a id="websiteButton" class="action-card action-card-wide" href="#" target="_blank" rel="noopener">
+        <a
+          id="websiteButton"
+          class="action-button action-button-wide"
+          href="#"
+          target="_blank"
+          rel="noopener"
+        >
           <span class="action-icon">◎</span>
           <span class="action-label">Website</span>
         </a>
 
       </div>
 
-      <p id="profileTagline" class="profile-tagline"></p>
+      <p
+        id="profileTagline"
+        class="profile-tagline"
+      ></p>
+
+    </section>
+
+    <section
+      id="executiveSection"
+      class="executive-section"
+    >
+
+      <article
+        id="aboutSection"
+        class="profile-panel"
+      >
+        <span class="section-label">Profile</span>
+
+        <h2>About Me</h2>
+
+        <p id="aboutText"></p>
+      </article>
+
+      <article
+        id="expertiseSection"
+        class="profile-panel"
+      >
+        <span class="section-label">Capabilities</span>
+
+        <h2>Areas of Expertise</h2>
+
+        <div
+          id="expertiseList"
+          class="expertise-list"
+        ></div>
+      </article>
+
+      <article
+        id="cvSection"
+        class="profile-panel"
+      >
+        <span class="section-label">Professional Background</span>
+
+        <h2>Curriculum Vitae</h2>
+
+        <p>
+          View or download my professional CV.
+        </p>
+
+        <a
+          id="cvButton"
+          class="secondary-button"
+          href="#"
+          target="_blank"
+          rel="noopener"
+        >
+          View CV
+        </a>
+      </article>
 
     </section>
 
