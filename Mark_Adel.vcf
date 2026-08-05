@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Adel;Mark;;;
+FN:Mark Adel
+ORG:Coptic Hope Center
+TITLE:Program Director
+TEL;TYPE=CELL:+254700000000
+EMAIL;TYPE=WORK:mark@example.com
+URL:https://www.linkedin.com/in/your-profile
+ADR;TYPE=WORK:;;;Nairobi;;;Kenya
+NOTE:Program leader working in healthcare implementation, partnerships, and community impact.
+END:VCARD
