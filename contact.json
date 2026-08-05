@@ -1,7 +1,7 @@
 {
   "layout": "card",
   "profile": {
-    "name": "Mark Adel",
+    "name": "Mark A. Mounir",
     "title": "Program Director",
     "organization": "Coptic Hope Center",
     "location": "Nairobi, Kenya",
@@ -9,25 +9,25 @@
     "photo": "assets/images/profile.jpg"
   },
   "contact": {
-    "phone": "+254700000000",
-    "whatsapp": "254700000000",
-    "email": "mark@example.com",
-    "linkedin": "https://www.linkedin.com/in/your-profile",
+    "phone": "254768027841",
+    "whatsapp": "254768027841",
+    "email": "mmounir@coptichospitals.org",
+    "linkedin": "https://www.linkedin.com/in/mark-adel-mounir-03152411b/",
     "website": "",
     "vcard": "Mark_Adel.vcf"
   },
   "display": {
     "showLocation": true,
     "showTagline": true,
-    "showCall": true,
-    "showWhatsApp": true,
+    "showCall": false,
+    "showWhatsApp": false,
     "showEmail": true,
     "showLinkedIn": true,
     "showWebsite": false,
     "showSaveContact": true,
-    "showAbout": true,
-    "showExpertise": true,
-    "showCV": true
+    "showAbout": false,
+    "showExpertise": false,
+    "showCV": false
   },
   "executiveProfile": {
     "about": "Program Director with experience in healthcare implementation, strategic partnerships, donor coordination, and operational leadership.",

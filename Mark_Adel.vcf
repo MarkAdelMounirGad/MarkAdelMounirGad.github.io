@@ -1,12 +1,12 @@
 BEGIN:VCARD
 VERSION:3.0
-N:Adel;Mark;;;
-FN:Mark Adel
+N:A. Mounir;Mark;;;
+FN:Mark A. Mounir
 ORG:Coptic Hope Center
 TITLE:Program Director
-TEL;TYPE=CELL,VOICE:+254700000000
-TEL;TYPE=CELL:+254700000000
-EMAIL;TYPE=INTERNET:mark@example.com
-X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/your-profile
+TEL;TYPE=CELL,VOICE:254768027841
+TEL;TYPE=CELL:+254768027841
+EMAIL;TYPE=INTERNET:mmounir@coptichospitals.org
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/mark-adel-mounir-03152411b/
 ADR;TYPE=WORK:;;;Nairobi\, Kenya;;;;
 END:VCARD
