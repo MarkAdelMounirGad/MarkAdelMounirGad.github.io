@@ -1,119 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Contact Card</title>
 
-<title>Mark Adel</title>
+  <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<div class="background"></div>
+  <main class="page-shell">
 
-<div class="glass-card">
+    <section class="contact-card">
 
-<div class="gold-glow"></div>
+      <div class="ambient ambient-top"></div>
+      <div class="ambient ambient-bottom"></div>
 
-<div class="photo">
+      <div class="profile-section">
 
-<img src="assets/images/profile.jpg"
-id="profileImage"
-alt="Profile">
+        <div class="photo-frame">
+          <img
+            id="profilePhoto"
+            class="profile-photo"
+            src=""
+            alt="Profile photo"
+          >
+        </div>
 
-</div>
+        <h1 id="profileName" class="profile-name"></h1>
 
-<h1 id="name">
-Loading...
-</h1>
+        <p id="profileTitle" class="profile-title"></p>
 
-<h2 id="title">
-</h2>
+        <p id="profileOrganization" class="profile-organization"></p>
 
-<p id="organization">
-</p>
+        <p id="profileLocation" class="profile-location"></p>
 
-<p class="location">
+      </div>
 
-Nairobi • Kenya
+      <a
+        id="saveContactButton"
+        class="save-contact-button"
+        href="#"
+        download
+      >
+        <span class="button-icon">↓</span>
+        <span>Save Contact</span>
+      </a>
 
-</p>
+      <div class="action-grid">
 
-<div class="main-action">
+        <a id="callButton" class="action-card" href="#">
+          <span class="action-icon">☎</span>
+          <span class="action-label">Call</span>
+        </a>
 
-<a
-id="saveContact"
-href="Mark_Adel.vcf"
-class="save-button">
+        <a id="whatsappButton" class="action-card" href="#" target="_blank" rel="noopener">
+          <span class="action-icon">◉</span>
+          <span class="action-label">WhatsApp</span>
+        </a>
 
-⬇ Save Contact
+        <a id="emailButton" class="action-card" href="#">
+          <span class="action-icon">✉</span>
+          <span class="action-label">Email</span>
+        </a>
 
-</a>
+        <a id="linkedinButton" class="action-card" href="#" target="_blank" rel="noopener">
+          <span class="action-icon linkedin-icon">in</span>
+          <span class="action-label">LinkedIn</span>
+        </a>
 
-</div>
+        <a id="websiteButton" class="action-card action-card-wide" href="#" target="_blank" rel="noopener">
+          <span class="action-icon">◎</span>
+          <span class="action-label">Website</span>
+        </a>
 
-<div class="actions">
+      </div>
 
-<a
-id="callButton"
-class="action">
+      <p id="profileTagline" class="profile-tagline"></p>
 
-📞
+    </section>
 
-<span>Call</span>
+  </main>
 
-</a>
-
-<a
-id="whatsappButton"
-class="action">
-
-💬
-
-<span>WhatsApp</span>
-
-</a>
-
-<a
-id="emailButton"
-class="action">
-
-✉
-
-<span>Email</span>
-
-</a>
-
-<a
-id="linkedinButton"
-class="action">
-
-💼
-
-<span>LinkedIn</span>
-
-</a>
-
-</div>
-
-<p class="quote">
-
-Improving Healthcare Through Leadership
-
-</p>
-
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
