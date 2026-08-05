@@ -1,4 +1,6 @@
 {
+  "layout": "card",
+
   "profile": {
     "name": "Mark Adel",
     "title": "Program Director",
@@ -25,6 +27,21 @@
     "showEmail": true,
     "showLinkedIn": true,
     "showWebsite": false,
-    "showSaveContact": true
+    "showSaveContact": true,
+    "showAbout": true,
+    "showExpertise": true,
+    "showCV": true
+  },
+
+  "executiveProfile": {
+    "about": "Program Director with experience in healthcare implementation, strategic partnerships, donor coordination, and operational leadership.",
+    "expertise": [
+      "Healthcare Leadership",
+      "Program Management",
+      "HIV Programs",
+      "Strategic Partnerships",
+      "Operations"
+    ],
+    "cv": "assets/files/Mark_Adel_CV.pdf"
   }
 }
