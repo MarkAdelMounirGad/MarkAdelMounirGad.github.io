@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y64QEYK6LR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-Y64QEYK6LR');
-</script>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y64QEYK6LR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y64QEYK6LR', {
+      anonymize_ip: true
+    });
+  </script>
   <meta charset="UTF-8">
 
   <meta
@@ -212,7 +213,6 @@
 
   </main>
 
-  <script src="analytics.js"></script>
   <script src="script.js"></script>
 
 </body>

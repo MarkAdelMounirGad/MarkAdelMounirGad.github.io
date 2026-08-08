@@ -109,27 +109,51 @@
 
           <section class="panel-section analytics-section">
             <div class="section-heading">
-              <span>05</span>
-              <div><h2>Analytics</h2><p>Track visits and contact-card actions</p></div>
+              <span>06</span>
+              <div>
+                <h2>Analytics</h2>
+                <p>Google Analytics is connected to your public contact card</p>
+              </div>
             </div>
 
-            <label class="toggle-item analytics-toggle">
-              <span>Enable analytics</span>
-              <input id="analyticsEnabled" type="checkbox">
-            </label>
+            <div class="analytics-status-card">
+              <div>
+                <p class="analytics-status-label">Measurement ID</p>
+                <strong>G-Y64QEYK6LR</strong>
+              </div>
+              <span class="analytics-live-badge">Connected</span>
+            </div>
 
-            <label>Google Analytics Measurement ID
-              <input id="analyticsMeasurementId" type="text" placeholder="G-XXXXXXXXXX" autocomplete="off" spellcheck="false">
-            </label>
+            <div class="analytics-info-grid">
+              <div class="analytics-info-item">
+                <strong>Visitors</strong>
+                <span>Page views, users, countries and devices</span>
+              </div>
+              <div class="analytics-info-item">
+                <strong>Contact actions</strong>
+                <span>Save Contact, Call, WhatsApp, Email, LinkedIn, Website and CV</span>
+              </div>
+              <div class="analytics-info-item">
+                <strong>Interest signals</strong>
+                <span>30/60/120-second engagement, deep scroll and returning visits</span>
+              </div>
+            </div>
 
-            <p class="hint">Tracks page views plus clicks on Save Contact, Call, WhatsApp, Email, LinkedIn, Website and CV. Visitor country, device, browser and user counts are available in Google Analytics reports.</p>
-
-            <a class="secondary-button analytics-open-button" href="https://analytics.google.com/" target="_blank" rel="noopener">Open Google Analytics</a>
+            <div class="analytics-actions">
+              <a class="primary-button analytics-link" href="https://analytics.google.com/" target="_blank" rel="noopener">
+                Open Google Analytics
+              </a>
+              <p class="hint">
+                In Google Analytics, open <strong>Reports → Engagement → Events</strong>.
+                Look for <strong>contact_action</strong>, <strong>professional_interest</strong>,
+                <strong>engagement_milestone</strong>, and <strong>session_summary</strong>.
+              </p>
+            </div>
           </section>
 
           <section class="panel-section security-section">
             <div class="section-heading">
-              <span>06</span>
+              <span>07</span>
               <div><h2>Local password</h2><p>Applies only to this browser and device</p></div>
             </div>
             <div class="field-grid two-columns">

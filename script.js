@@ -93,6 +93,9 @@ fetch("contact.json")
     renderExpertise(executive.expertise || []);
 
     document.title = profile.name || "Digital Contact Card";
+
+    bindAnalyticsClicks();
+    initializeEngagementAnalytics();
   })
   .catch(error => {
     console.error(error);
@@ -250,4 +253,161 @@ function escapeVcard(value) {
     .replace(/\n/g, "\\n")
     .replace(/,/g, "\\,")
     .replace(/;/g, "\\;");
+}
+
+
+
+// ---------- Google Analytics interaction tracking ----------
+const ANALYTICS_MEASUREMENT_ID = "G-Y64QEYK6LR";
+const analyticsState = {
+  loadedAt: Date.now(),
+  maxScrollPercent: 0,
+  interestLevel: "low",
+  fired: new Set()
+};
+
+function analyticsAvailable() {
+  return typeof window.gtag === "function";
+}
+
+function trackEvent(eventName, parameters = {}) {
+  if (!analyticsAvailable()) return;
+
+  const clean = {};
+  Object.entries(parameters).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      clean[key] = value;
+    }
+  });
+
+  window.gtag("event", eventName, clean);
+}
+
+function trackOnce(key, eventName, parameters = {}) {
+  if (analyticsState.fired.has(key)) return;
+  analyticsState.fired.add(key);
+  trackEvent(eventName, parameters);
+}
+
+function trackContactAction(actionName) {
+  trackEvent("contact_action", {
+    action_name: actionName,
+    page_type: "digital_contact_card"
+  });
+
+  // High-intent actions contribute to a professional-interest signal.
+  if (["save_contact", "call", "whatsapp", "email"].includes(actionName)) {
+    setInterestLevel("high", actionName);
+  } else if (["linkedin", "website", "cv"].includes(actionName)) {
+    setInterestLevel("medium", actionName);
+  }
+}
+
+function setInterestLevel(level, trigger) {
+  const rank = { low: 1, medium: 2, high: 3 };
+  if (rank[level] <= rank[analyticsState.interestLevel]) return;
+
+  analyticsState.interestLevel = level;
+  trackEvent("professional_interest", {
+    interest_level: level,
+    trigger: trigger || "engagement"
+  });
+}
+
+function bindAnalyticsClicks() {
+  const actions = {
+    saveContactButton: "save_contact",
+    callButton: "call",
+    whatsappButton: "whatsapp",
+    emailButton: "email",
+    linkedinButton: "linkedin",
+    websiteButton: "website",
+    cvButton: "cv"
+  };
+
+  Object.entries(actions).forEach(([id, actionName]) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    element.addEventListener("click", () => {
+      trackContactAction(actionName);
+    });
+  });
+}
+
+function initializeEngagementAnalytics() {
+  // Returning visitor is kept only on the visitor's own browser.
+  try {
+    const visitKey = "markCardVisitedBefore";
+    if (localStorage.getItem(visitKey)) {
+      trackOnce("return_visitor", "return_visitor", {
+        visitor_type: "returning"
+      });
+      setInterestLevel("medium", "return_visit");
+    } else {
+      localStorage.setItem(visitKey, new Date().toISOString());
+    }
+  } catch (_) {}
+
+  // Time-based engagement signals.
+  setTimeout(() => {
+    trackOnce("30_seconds", "engagement_milestone", {
+      milestone: "30_seconds"
+    });
+    setInterestLevel("medium", "30_seconds");
+  }, 30000);
+
+  setTimeout(() => {
+    trackOnce("60_seconds", "engagement_milestone", {
+      milestone: "60_seconds"
+    });
+  }, 60000);
+
+  setTimeout(() => {
+    trackOnce("120_seconds", "engagement_milestone", {
+      milestone: "120_seconds"
+    });
+    setInterestLevel("high", "120_seconds");
+  }, 120000);
+
+  window.addEventListener("scroll", () => {
+    const documentHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
+    const viewportBottom = window.scrollY + window.innerHeight;
+    const percent = documentHeight > 0
+      ? Math.min(100, Math.round((viewportBottom / documentHeight) * 100))
+      : 0;
+
+    analyticsState.maxScrollPercent = Math.max(
+      analyticsState.maxScrollPercent,
+      percent
+    );
+
+    if (analyticsState.maxScrollPercent >= 50) {
+      trackOnce("scroll_50", "engagement_milestone", {
+        milestone: "scroll_50"
+      });
+      setInterestLevel("medium", "scroll_50");
+    }
+
+    if (analyticsState.maxScrollPercent >= 90) {
+      trackOnce("scroll_90", "engagement_milestone", {
+        milestone: "scroll_90"
+      });
+      setInterestLevel("high", "scroll_90");
+    }
+  }, { passive: true });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState !== "hidden") return;
+
+    const seconds = Math.round((Date.now() - analyticsState.loadedAt) / 1000);
+    trackEvent("session_summary", {
+      engagement_seconds: seconds,
+      max_scroll_percent: analyticsState.maxScrollPercent,
+      interest_level: analyticsState.interestLevel
+    });
+  });
 }
