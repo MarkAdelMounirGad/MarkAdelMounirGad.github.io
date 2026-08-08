@@ -1,5 +1,5 @@
 
-const PROPERTY_DEFAULT = "518114599";
+const PROPERTY_DEFAULT = "549159908";
 const GA_SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
 const API_BASE = "https://analyticsdata.googleapis.com/v1beta/properties/";
 
@@ -78,7 +78,7 @@ function connectGoogle() {
       accessToken = response.access_token;
       $("gaConnectionStatus").textContent = "Connected";
       $("gaConnectionStatus").classList.add("connected");
-      $("analyticsDashboard").classList.remove("is-disabled");
+      $("analyticsDashboard").classList.remove("analytics-disabled");
       await loadDashboard();
     },
     error_callback: err => {
