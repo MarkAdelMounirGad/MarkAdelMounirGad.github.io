@@ -75,6 +75,7 @@ function populateForm(data) {
   const contact = data.contact || {};
   const display = data.display || {};
   const executive = data.executiveProfile || {};
+  const analytics = data.analytics || {};
 
   setValue("name", profile.name);
   setValue("title", profile.title);
@@ -90,6 +91,9 @@ function populateForm(data) {
   setValue("about", executive.about);
   setValue("expertise", Array.isArray(executive.expertise) ? executive.expertise.join("\n") : "");
   setValue("cv", executive.cv);
+  const analyticsEnabled = document.getElementById("analyticsEnabled");
+  if (analyticsEnabled) analyticsEnabled.checked = analytics.enabled === true;
+  setValue("analyticsMeasurementId", analytics.measurementId);
 
   Object.keys(DISPLAY_LABELS).forEach(key => {
     const input = document.getElementById(key);
@@ -132,6 +136,10 @@ function collectData() {
       about: value("about"),
       expertise,
       cv: value("cv")
+    },
+    analytics: {
+      enabled: Boolean(document.getElementById("analyticsEnabled")?.checked),
+      measurementId: value("analyticsMeasurementId").toUpperCase()
     }
   };
 }
@@ -270,4 +278,4 @@ function setText(id, val) { const el = document.getElementById(id); if (el) el.t
 function setMessage(id, message, success = false) { const el = document.getElementById(id); if (!el) return; el.textContent = message; el.classList.toggle("success", success); }
 function downloadBlob(blob, filename) { const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
 async function fetchJson(path) { const response = await fetch(`${path}?v=${Date.now()}`); if (!response.ok) throw new Error(`Could not load ${path}`); return response.json(); }
-function createBlankData() { return { layout:"card", profile:{}, contact:{vcard:"Mark_Adel.vcf"}, display:{}, executiveProfile:{expertise:[]} }; }
+function createBlankData() { return { layout:"card", profile:{}, contact:{vcard:"Mark_Adel.vcf"}, display:{}, executiveProfile:{expertise:[]}, analytics:{enabled:false,measurementId:""} }; }

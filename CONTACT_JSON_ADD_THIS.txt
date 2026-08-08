@@ -1,0 +1,8 @@
+Add this block near the end of your existing contact.json (remember the comma before it if needed):
+
+"analytics": {
+  "enabled": false,
+  "measurementId": ""
+}
+
+Do not replace your current contact.json with an older copy just to add analytics. The upgraded admin page will manage this block after it is installed.

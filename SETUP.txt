@@ -1,0 +1,18 @@
+MARK ADEL CONTACT CARD — ANALYTICS PATCH
+
+1. Upload/replace these files in your GitHub repository:
+   - analytics.js (new)
+   - index.html
+   - admin.html
+   - admin.js
+   - admin.css
+
+2. Add the analytics block from CONTACT_JSON_ADD_THIS.txt to your CURRENT contact.json.
+
+3. Create a Google Analytics 4 web data stream for your GitHub Pages URL and copy its Measurement ID (starts with G-).
+
+4. Open admin.html, sign in, scroll to Analytics, paste the G- Measurement ID, tick Enable analytics, and download contact.json.
+
+5. Replace contact.json on GitHub with the downloaded one and commit.
+
+Analytics will then record page views and clicks on Save Contact, Call, WhatsApp, Email, LinkedIn, Website, and CV.

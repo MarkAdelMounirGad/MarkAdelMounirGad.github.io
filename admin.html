@@ -106,9 +106,30 @@
             <div id="displayToggles" class="toggle-grid"></div>
           </section>
 
-          <section class="panel-section security-section">
+
+          <section class="panel-section analytics-section">
             <div class="section-heading">
               <span>05</span>
+              <div><h2>Analytics</h2><p>Track visits and contact-card actions</p></div>
+            </div>
+
+            <label class="toggle-item analytics-toggle">
+              <span>Enable analytics</span>
+              <input id="analyticsEnabled" type="checkbox">
+            </label>
+
+            <label>Google Analytics Measurement ID
+              <input id="analyticsMeasurementId" type="text" placeholder="G-XXXXXXXXXX" autocomplete="off" spellcheck="false">
+            </label>
+
+            <p class="hint">Tracks page views plus clicks on Save Contact, Call, WhatsApp, Email, LinkedIn, Website and CV. Visitor country, device, browser and user counts are available in Google Analytics reports.</p>
+
+            <a class="secondary-button analytics-open-button" href="https://analytics.google.com/" target="_blank" rel="noopener">Open Google Analytics</a>
+          </section>
+
+          <section class="panel-section security-section">
+            <div class="section-heading">
+              <span>06</span>
               <div><h2>Local password</h2><p>Applies only to this browser and device</p></div>
             </div>
             <div class="field-grid two-columns">

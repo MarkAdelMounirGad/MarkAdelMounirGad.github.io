@@ -76,3 +76,6 @@ textarea { resize: vertical; line-height: 1.5; }
 .form-message.success { color: #28744d; }
 @media (max-width: 980px) { .admin-grid { grid-template-columns: 1fr; } .sticky-preview { position: static; } .preview-panel { order: -1; } }
 @media (max-width: 650px) { .admin-shell { width: min(100% - 18px,1440px); padding-top: 14px; } .login-card,.panel-section,.preview-panel { padding: 20px; border-radius: 18px; } .admin-header { align-items: flex-start; flex-direction: column; } .two-columns,.toggle-grid,.photo-editor { grid-template-columns: 1fr; } .photo-preview-wrap { margin: auto; } }
+
+.analytics-section .analytics-toggle { margin-bottom: 16px; max-width: 360px; }
+.analytics-open-button { width: fit-content; margin-top: 4px; }
