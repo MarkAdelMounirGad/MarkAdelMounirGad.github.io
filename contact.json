@@ -6,7 +6,7 @@
     "organization": "Coptic Hope Center",
     "location": "Nairobi, Kenya",
     "tagline": "Improving Healthcare Through Leadership",
-    "photo": "assets/images/profile.jpeg"
+    "photo": "assets/images/profile.jpg"
   },
   "contact": {
     "phone": "254768027841",
@@ -17,7 +17,7 @@
     "vcard": "Mark_Adel.vcf"
   },
   "display": {
-    "showLocation": true,
+    "showLocation": false,
     "showTagline": true,
     "showCall": false,
     "showWhatsApp": false,
