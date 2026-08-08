@@ -111,12 +111,12 @@ async function loadDashboard() {
     ] = await Promise.all([
       runReport({
         dateRanges: [{ startDate, endDate: "today" }],
-        metrics: [
-          { name: "activeUsers" },
-          { name: "gaSessions" },
-          { name: "screenPageViews" },
-          { name: "averageEngagementTimePerActiveUser" }
-        ]
+          metrics: [
+        { name: "activeUsers" },
+        { name: "sessions" },
+        { name: "screenPageViews" },
+        { name: "averageSessionDuration" }
+      ]
       }),
       runReport({
         dateRanges: [{ startDate, endDate: "today" }],
