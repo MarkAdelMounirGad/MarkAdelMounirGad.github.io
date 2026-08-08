@@ -144,29 +144,54 @@ function configurePhoto(photoUrl, name) {
   const image = document.getElementById("profilePhoto");
   const fallback = document.getElementById("photoFallback");
 
-  if (!image || !fallback) {
-    return;
-  }
+  if (!image || !fallback) return;
 
   fallback.textContent = getInitials(name);
 
-  if (!photoUrl) {
-    image.style.display = "none";
-    fallback.style.display = "grid";
-    return;
+  const requested = (photoUrl || "").trim();
+  const candidates = [];
+
+  if (requested) {
+    candidates.push(requested);
+
+    // Gracefully recover when GitHub contains profile.jpeg but an older
+    // contact.json still points to profile.jpg (or vice versa).
+    if (/\.jpg($|[?#])/i.test(requested)) {
+      candidates.push(requested.replace(/\.jpg($|[?#])/i, ".jpeg$1"));
+    } else if (/\.jpeg($|[?#])/i.test(requested)) {
+      candidates.push(requested.replace(/\.jpeg($|[?#])/i, ".jpg$1"));
+    }
   }
 
-  image.onload = () => {
-    image.style.display = "block";
-    fallback.style.display = "none";
-  };
+  // Your current GitHub profile image location.
+  candidates.push("assets/images/profile.jpeg");
+  candidates.push("assets/images/profile.jpg");
 
-  image.onerror = () => {
+  const uniqueCandidates = [...new Set(candidates.filter(Boolean))];
+  let index = 0;
+
+  function showFallback() {
+    image.removeAttribute("src");
     image.style.display = "none";
     fallback.style.display = "grid";
-  };
+  }
 
-  image.src = photoUrl;
+  function tryNext() {
+    if (index >= uniqueCandidates.length) {
+      showFallback();
+      return;
+    }
+
+    const nextUrl = uniqueCandidates[index++];
+    image.onload = () => {
+      image.style.display = "block";
+      fallback.style.display = "none";
+    };
+    image.onerror = tryNext;
+    image.src = nextUrl;
+  }
+
+  tryNext();
 }
 
 function getInitials(name) {
@@ -295,7 +320,12 @@ function trackContactAction(actionName) {
     page_type: "digital_contact_card"
   });
 
-  // High-intent actions contribute to a professional-interest signal.
+  // Also send a dedicated event name so the custom dashboard can report
+  // each action without requiring GA4 custom-dimension registration.
+  trackEvent(`contact_${actionName}`, {
+    page_type: "digital_contact_card"
+  });
+
   if (["save_contact", "call", "whatsapp", "email"].includes(actionName)) {
     setInterestLevel("high", actionName);
   } else if (["linkedin", "website", "cv"].includes(actionName)) {
@@ -310,6 +340,9 @@ function setInterestLevel(level, trigger) {
   analyticsState.interestLevel = level;
   trackEvent("professional_interest", {
     interest_level: level,
+    trigger: trigger || "engagement"
+  });
+  trackEvent(`interest_${level}`, {
     trigger: trigger || "engagement"
   });
 }

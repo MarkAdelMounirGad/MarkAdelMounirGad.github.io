@@ -81,7 +81,7 @@ function populateForm(data) {
   setValue("organization", profile.organization);
   setValue("location", profile.location);
   setValue("tagline", profile.tagline);
-  setValue("photoPath", profile.photo || "assets/images/profile.jpg");
+  setValue("photoPath", profile.photo || "assets/images/profile.jpeg");
   setValue("phone", contact.phone);
   setValue("whatsapp", contact.whatsapp);
   setValue("email", contact.email);
@@ -117,7 +117,7 @@ function collectData() {
       organization: value("organization"),
       location: value("location"),
       tagline: value("tagline"),
-      photo: value("photoPath") || "assets/images/profile.jpg"
+      photo: value("photoPath") || "assets/images/profile.jpeg"
     },
     contact: {
       phone: value("phone"),

@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="admin.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
   <main class="admin-shell">
@@ -40,6 +41,8 @@
           <h1>Edit your public profile</h1>
         </div>
         <div class="header-actions">
+          <button id="showEditorButton" class="ghost-button active-admin-view" type="button">Profile editor</button>
+          <button id="showAnalyticsButton" class="ghost-button" type="button">Analytics</button>
           <a class="ghost-button" href="index.html" target="_blank" rel="noopener">Open public page</a>
           <button id="logoutButton" class="ghost-button" type="button">Sign out</button>
         </div>
@@ -106,54 +109,9 @@
             <div id="displayToggles" class="toggle-grid"></div>
           </section>
 
-
-          <section class="panel-section analytics-section">
-            <div class="section-heading">
-              <span>06</span>
-              <div>
-                <h2>Analytics</h2>
-                <p>Google Analytics is connected to your public contact card</p>
-              </div>
-            </div>
-
-            <div class="analytics-status-card">
-              <div>
-                <p class="analytics-status-label">Measurement ID</p>
-                <strong>G-Y64QEYK6LR</strong>
-              </div>
-              <span class="analytics-live-badge">Connected</span>
-            </div>
-
-            <div class="analytics-info-grid">
-              <div class="analytics-info-item">
-                <strong>Visitors</strong>
-                <span>Page views, users, countries and devices</span>
-              </div>
-              <div class="analytics-info-item">
-                <strong>Contact actions</strong>
-                <span>Save Contact, Call, WhatsApp, Email, LinkedIn, Website and CV</span>
-              </div>
-              <div class="analytics-info-item">
-                <strong>Interest signals</strong>
-                <span>30/60/120-second engagement, deep scroll and returning visits</span>
-              </div>
-            </div>
-
-            <div class="analytics-actions">
-              <a class="primary-button analytics-link" href="https://analytics.google.com/" target="_blank" rel="noopener">
-                Open Google Analytics
-              </a>
-              <p class="hint">
-                In Google Analytics, open <strong>Reports → Engagement → Events</strong>.
-                Look for <strong>contact_action</strong>, <strong>professional_interest</strong>,
-                <strong>engagement_milestone</strong>, and <strong>session_summary</strong>.
-              </p>
-            </div>
-          </section>
-
           <section class="panel-section security-section">
             <div class="section-heading">
-              <span>07</span>
+              <span>05</span>
               <div><h2>Local password</h2><p>Applies only to this browser and device</p></div>
             </div>
             <div class="field-grid two-columns">
@@ -194,8 +152,84 @@
           </div>
         </aside>
       </div>
+
+      <section id="analyticsView" class="analytics-admin-view is-hidden">
+        <div class="analytics-admin-heading">
+          <div>
+            <p class="eyebrow">PRIVATE ANALYTICS</p>
+            <h2>Analytics Dashboard</h2>
+            <p class="muted">Live and historical data from your Google Analytics 4 property.</p>
+          </div>
+        </div>
+
+        <section id="analyticsSetupPanel" class="analytics-panel analytics-setup-panel">
+          <div>
+            <h3>Connect Google Analytics</h3>
+            <p class="muted">Your Google access token stays in this browser and is not stored in GitHub.</p>
+          </div>
+          <div class="analytics-setup-grid">
+            <label>GA4 Property ID<input id="gaPropertyId" value="518114599" inputmode="numeric"></label>
+            <label>Google OAuth Client ID<input id="gaClientId" placeholder="xxxxxxxxxxxx.apps.googleusercontent.com"></label>
+          </div>
+          <div class="analytics-setup-actions">
+            <button id="gaConnectButton" class="primary-button" type="button">Connect Google Analytics</button>
+            <span id="gaConnectionStatus" class="analytics-status-text">Not connected</span>
+          </div>
+          <details class="analytics-help">
+            <summary>First-time Google setup</summary>
+            <p>Enable the Google Analytics Data API in Google Cloud, create an OAuth 2.0 Client ID for a Web application, add your GitHub Pages address as an Authorized JavaScript origin, then paste that Client ID here once.</p>
+          </details>
+        </section>
+
+        <section id="analyticsDashboard" class="analytics-dashboard analytics-disabled" aria-busy="false">
+          <div class="analytics-toolbar">
+            <div class="analytics-range-buttons">
+              <button class="analytics-range active" data-days="1" type="button">Today</button>
+              <button class="analytics-range" data-days="7" type="button">7 days</button>
+              <button class="analytics-range" data-days="30" type="button">30 days</button>
+              <button class="analytics-range" data-days="90" type="button">90 days</button>
+            </div>
+            <div class="analytics-toolbar-actions">
+              <button id="gaRefreshButton" class="ghost-button" type="button">Refresh</button>
+              <span id="gaLastUpdated" class="analytics-last-updated">—</span>
+            </div>
+          </div>
+
+          <div class="analytics-kpi-grid">
+            <article class="analytics-kpi accent"><span>Active users</span><strong id="gaActiveUsers">—</strong><small>Selected period</small></article>
+            <article class="analytics-kpi"><span>Sessions</span><strong id="gaSessions">—</strong><small>Visits</small></article>
+            <article class="analytics-kpi"><span>Page views</span><strong id="gaViews">—</strong><small>Views</small></article>
+            <article class="analytics-kpi"><span>Avg. engagement</span><strong id="gaEngagement">—</strong><small>Per active user</small></article>
+            <article class="analytics-kpi live"><span>Live now</span><strong id="gaLiveUsers">—</strong><small>Last 30 minutes</small></article>
+            <article class="analytics-kpi"><span>Contact actions</span><strong id="gaContactActions">—</strong><small>Total tracked clicks</small></article>
+          </div>
+
+          <div class="analytics-insight-grid">
+            <article class="analytics-panel analytics-wide">
+              <div class="analytics-panel-heading"><div><p class="eyebrow">TREND</p><h3>Visitors over time</h3></div></div>
+              <div id="gaTrendChart" class="analytics-bar-chart analytics-empty">Connect to load data</div>
+            </article>
+            <article class="analytics-panel"><div class="analytics-panel-heading"><div><p class="eyebrow">LOCATION</p><h3>Top countries</h3></div></div><div id="gaCountries" class="analytics-ranking analytics-empty">—</div></article>
+            <article class="analytics-panel"><div class="analytics-panel-heading"><div><p class="eyebrow">TECHNOLOGY</p><h3>Devices</h3></div></div><div id="gaDevices" class="analytics-ranking analytics-empty">—</div></article>
+            <article class="analytics-panel"><div class="analytics-panel-heading"><div><p class="eyebrow">TECHNOLOGY</p><h3>Browsers</h3></div></div><div id="gaBrowsers" class="analytics-ranking analytics-empty">—</div></article>
+            <article class="analytics-panel"><div class="analytics-panel-heading"><div><p class="eyebrow">CONVERSION</p><h3>Contact actions</h3></div></div><div id="gaActions" class="analytics-action-list analytics-empty">—</div></article>
+            <article class="analytics-panel">
+              <div class="analytics-panel-heading"><div><p class="eyebrow">INTEREST</p><h3>Professional interest</h3></div></div>
+              <div class="analytics-interest-box"><strong id="gaInterestLevel">—</strong><span>Based on tracked engagement signals</span></div>
+              <div id="gaInterestBreakdown" class="analytics-ranking analytics-empty">—</div>
+            </article>
+            <article class="analytics-panel">
+              <div class="analytics-panel-heading"><div><p class="eyebrow">REALTIME</p><h3>Live countries</h3></div><span class="analytics-live-dot">LIVE</span></div>
+              <div id="gaLiveCountries" class="analytics-ranking analytics-empty">—</div>
+            </article>
+          </div>
+          <div id="gaErrorPanel" class="analytics-error is-hidden"></div>
+        </section>
+      </section>
+
     </section>
   </main>
   <script src="admin.js"></script>
+  <script src="admin-analytics.js"></script>
 </body>
 </html>
