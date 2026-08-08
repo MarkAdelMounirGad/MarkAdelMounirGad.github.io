@@ -155,7 +155,7 @@ function configurePhoto(photoUrl, name) {
     candidates.push(requested);
 
     // Gracefully recover when GitHub contains profile.jpeg but an older
-    // contact.json still points to profile.jpg (or vice versa).
+    // contact.json still points to profile.jpeg (or vice versa).
     if (/\.jpg($|[?#])/i.test(requested)) {
       candidates.push(requested.replace(/\.jpg($|[?#])/i, ".jpeg$1"));
     } else if (/\.jpeg($|[?#])/i.test(requested)) {
@@ -165,7 +165,7 @@ function configurePhoto(photoUrl, name) {
 
   // Your current GitHub profile image location.
   candidates.push("assets/images/profile.jpeg");
-  candidates.push("assets/images/profile.jpg");
+  candidates.push("assets/images/profile.jpeg");
 
   const uniqueCandidates = [...new Set(candidates.filter(Boolean))];
   let index = 0;
