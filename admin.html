@@ -30,7 +30,7 @@
 
       <details class="first-use">
         <summary>First time here?</summary>
-        <p>Use <strong>mark-admin</strong>, then change the password from inside the editor. This protection is only for convenience because GitHub Pages is a static site.</p>
+        <p>Default password: <strong>mark-admin</strong>. You can change it inside the editor. The hardcoded fallback is stored as a hash, not as plain-text.</p>
       </details>
     </section>
 
@@ -112,13 +112,15 @@
           <section class="panel-section security-section">
             <div class="section-heading">
               <span>05</span>
-              <div><h2>Local password</h2><p>Applies only to this browser and device</p></div>
+              <div><h2>Admin password</h2><p>Hardcoded fallback + editable local override</p></div>
             </div>
             <div class="field-grid two-columns">
               <label>New password<input id="newPassword" type="password" minlength="6"></label>
               <label>Confirm password<input id="confirmPassword" type="password" minlength="6"></label>
             </div>
-            <button id="changePasswordButton" class="secondary-button" type="button">Change local password</button>
+            <button id="changePasswordButton" class="secondary-button" type="button">Change password</button>
+            <button id="downloadConfigButton" class="ghost-button full-button" type="button">Download persistent admin-config.js</button>
+            <p class="hint">Changing the password here applies immediately on this browser. Download and replace <strong>admin-config.js</strong> in GitHub if you want the new password and Analytics settings to become the permanent defaults on every device.</p>
             <p id="passwordMessage" class="form-message" aria-live="polite"></p>
           </section>
         </form>
@@ -168,8 +170,8 @@
             <p class="muted">Your Google access token stays in this browser and is not stored in GitHub.</p>
           </div>
           <div class="analytics-setup-grid">
-            <label>GA4 Property ID<input id="gaPropertyId" value="518114599" inputmode="numeric"></label>
-            <label>Google OAuth Client ID<input id="gaClientId" placeholder="xxxxxxxxxxxx.apps.googleusercontent.com"></label>
+            <label>GA4 Property ID<input id="gaPropertyId" value="549159908" inputmode="numeric"></label>
+            <label>Google OAuth Client ID<input id="gaClientId" value="974834211769-sj4l91tgagkv6cs8p06nkmn5e9gfmc7l.apps.googleusercontent.com" placeholder="xxxxxxxxxxxx.apps.googleusercontent.com"></label>
           </div>
           <div class="analytics-setup-actions">
             <button id="gaConnectButton" class="primary-button" type="button">Connect Google Analytics</button>
@@ -228,8 +230,8 @@
       </section>
 
     </section>
-  </main>
-  <script src="admin.js"></script>
-  <script src="admin-analytics.js?v=20"></script>
+  </main>  <script src="admin-config.js?v=30"></script>
+  <script src="admin.js?v=30"></script>
+  <script src="admin-analytics.js?v=30"></script>
 </body>
 </html>

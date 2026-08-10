@@ -1,5 +1,5 @@
-const DEFAULT_PASSWORD = "mark-admin";
-const PASSWORD_KEY = "markContactAdminPassword";
+const CONFIG = window.ADMIN_CONFIG || {};
+const PASSWORD_HASH_KEY = "markContactAdminPasswordHash";
 const DRAFT_KEY = "markContactAdminDraft";
 const DISPLAY_LABELS = {
   showLocation: "Location",
@@ -25,6 +25,19 @@ const profileForm = document.getElementById("profileForm");
 
 initialize();
 
+async function sha256Hex(value) {
+  const data = new TextEncoder().encode(String(value || ""));
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(digest))
+    .map(byte => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+function currentPasswordHash() {
+  return localStorage.getItem(PASSWORD_HASH_KEY) || CONFIG.passwordHash || "";
+}
+
+
 async function initialize() {
   buildDisplayToggles();
   bindEvents();
@@ -46,19 +59,25 @@ function bindEvents() {
   document.getElementById("saveDraftButton").addEventListener("click", saveDraft);
   document.getElementById("resetButton").addEventListener("click", loadPublishedData);
   document.getElementById("changePasswordButton").addEventListener("click", changePassword);
+  document.getElementById("downloadConfigButton")?.addEventListener("click", downloadPersistentConfig);
   profileForm.addEventListener("input", updatePreview);
 }
 
-function handleLogin(event) {
+async function handleLogin(event) {
   event.preventDefault();
+
   const entered = document.getElementById("passwordInput").value;
-  const current = localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
-  if (entered !== current) {
+  const enteredHash = await sha256Hex(entered);
+  const expectedHash = currentPasswordHash();
+
+  if (!expectedHash || enteredHash !== expectedHash) {
     setMessage("loginMessage", "Incorrect password.");
     return;
   }
+
   loginView.classList.add("is-hidden");
   editorView.classList.remove("is-hidden");
+
   const draft = readDraft();
   populateForm(draft || publishedData || createBlankData());
   setMessage("loginMessage", "");
@@ -215,15 +234,64 @@ function loadPublishedData() {
   setMessage("exportMessage", "Published information reloaded.", true);
 }
 
-function changePassword() {
+async function changePassword() {
   const password = value("newPassword");
   const confirmation = value("confirmPassword");
-  if (password.length < 6) return setMessage("passwordMessage", "Use at least 6 characters.");
-  if (password !== confirmation) return setMessage("passwordMessage", "Passwords do not match.");
-  localStorage.setItem(PASSWORD_KEY, password);
+
+  if (password.length < 6) {
+    return setMessage("passwordMessage", "Use at least 6 characters.");
+  }
+
+  if (password !== confirmation) {
+    return setMessage("passwordMessage", "Passwords do not match.");
+  }
+
+  const hash = await sha256Hex(password);
+  localStorage.setItem(PASSWORD_HASH_KEY, hash);
+
   setValue("newPassword", "");
   setValue("confirmPassword", "");
-  setMessage("passwordMessage", "Local password changed.", true);
+
+  setMessage(
+    "passwordMessage",
+    "Password changed on this browser. Download admin-config.js below if you want this password to become the permanent default on every device.",
+    true
+  );
+}
+
+
+function downloadPersistentConfig() {
+  const passwordHash = currentPasswordHash();
+  const gaPropertyId =
+    localStorage.getItem("markGaPropertyId") ||
+    document.getElementById("gaPropertyId")?.value.trim() ||
+    CONFIG.gaPropertyId ||
+    "549159908";
+
+  const gaClientId =
+    localStorage.getItem("markGaClientId") ||
+    document.getElementById("gaClientId")?.value.trim() ||
+    CONFIG.gaClientId ||
+    "";
+
+  const content =
+`window.ADMIN_CONFIG = Object.freeze({
+  passwordHash: "${passwordHash}",
+  gaPropertyId: "${gaPropertyId}",
+  gaClientId: "${gaClientId}"
+});
+`;
+
+  downloadBlob(
+    new Blob([content], { type: "text/javascript;charset=utf-8" }),
+    "admin-config.js"
+  );
+
+  setMessage(
+    "passwordMessage",
+    "admin-config.js downloaded. Replace the existing file in GitHub to make the current password and Analytics settings permanent across devices.",
+    true
+  );
 }
 
 function buildDisplayToggles() {

@@ -1,4 +1,4 @@
-const PROPERTY_DEFAULT = "549159908";
+const PROPERTY_DEFAULT = window.ADMIN_CONFIG?.gaPropertyId || "549159908";
 const GA_SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
 const API_BASE = "https://analyticsdata.googleapis.com/v1beta/properties/";
 
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if ($("gaClientId")) {
     $("gaClientId").value =
-      localStorage.getItem("markGaClientId") || "";
+      localStorage.getItem("markGaClientId") || window.ADMIN_CONFIG?.gaClientId || "";
   }
 
   $("gaConnectButton")?.addEventListener("click", connectGoogle);
