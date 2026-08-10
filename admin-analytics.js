@@ -139,19 +139,16 @@ async function loadDashboard() {
       summary,
       trend,
       countries,
-      devices,
-      browsers,
       events,
-      live,
-      liveCountries
+      returning,
+      live
     ] = await Promise.all([
       runReport({
         dateRanges: [{ startDate, endDate: "today" }],
         metrics: [
           { name: "activeUsers" },
-          { name: "sessions" },
-          { name: "screenPageViews" },
-          { name: "averageSessionDuration" }
+          { name: "engagementRate" },
+          { name: "userEngagementDuration" }
         ]
       }),
 
@@ -168,11 +165,7 @@ async function loadDashboard() {
         ]
       }),
 
-      rankedReport(startDate, "country", "activeUsers", 8),
-
-      rankedReport(startDate, "deviceCategory", "activeUsers", 8),
-
-      rankedReport(startDate, "browser", "activeUsers", 8),
+      rankedReport(startDate, "country", "activeUsers", 10),
 
       runReport({
         dateRanges: [{ startDate, endDate: "today" }],
@@ -181,8 +174,9 @@ async function loadDashboard() {
         dimensionFilter: {
           orGroup: {
             expressions: [
-              startsWithFilter("eventName", "contact_"),
-              startsWithFilter("eventName", "interest_")
+              exactFilter("eventName", "contact_save_contact"),
+              exactFilter("eventName", "contact_email"),
+              exactFilter("eventName", "contact_linkedin")
             ]
           }
         },
@@ -194,35 +188,26 @@ async function loadDashboard() {
             desc: true
           }
         ],
-        limit: "50"
+        limit: "20"
       }),
 
-      runRealtime({
+      runReport({
+        dateRanges: [{ startDate, endDate: "today" }],
+        dimensions: [{ name: "newVsReturning" }],
         metrics: [{ name: "activeUsers" }]
       }),
 
       runRealtime({
-        dimensions: [{ name: "country" }],
-        metrics: [{ name: "activeUsers" }],
-        orderBys: [
-          {
-            metric: {
-              metricName: "activeUsers"
-            },
-            desc: true
-          }
-        ],
-        limit: "8"
+        metrics: [{ name: "activeUsers" }]
       })
     ]);
 
     paintSummary(summary);
     paintTrend(trend);
     paintRanking("gaCountries", countries);
-    paintRanking("gaDevices", devices);
-    paintRanking("gaBrowsers", browsers);
-    paintEvents(events);
-    paintLive(live, liveCountries);
+    paintContactEvents(events);
+    paintReturningVisitors(returning);
+    paintLive(live);
 
     if ($("gaLastUpdated")) {
       $("gaLastUpdated").textContent =
@@ -284,6 +269,20 @@ function startsWithFilter(fieldName, value) {
   };
 }
 
+
+function exactFilter(fieldName, value) {
+  return {
+    filter: {
+      fieldName,
+      stringFilter: {
+        matchType: "EXACT",
+        value,
+        caseSensitive: false
+      }
+    }
+  };
+}
+
 async function runReport(body) {
   return gaFetch("runReport", body);
 }
@@ -337,16 +336,17 @@ function paintSummary(report) {
     $("gaActiveUsers").textContent = number(row[0]?.value);
   }
 
-  if ($("gaSessions")) {
-    $("gaSessions").textContent = number(row[1]?.value);
-  }
-
-  if ($("gaViews")) {
-    $("gaViews").textContent = number(row[2]?.value);
+  if ($("gaEngagementRate")) {
+    $("gaEngagementRate").textContent = percent(row[1]?.value);
   }
 
   if ($("gaEngagement")) {
-    $("gaEngagement").textContent = duration(row[3]?.value);
+    const totalEngagedSeconds = Number(row[2]?.value || 0);
+    const activeUsers = Number(row[0]?.value || 0);
+    const averageEngagedSeconds =
+      activeUsers > 0 ? totalEngagedSeconds / activeUsers : 0;
+
+    $("gaEngagement").textContent = duration(averageEngagedSeconds);
   }
 }
 
@@ -451,191 +451,60 @@ function paintRanking(id, report) {
     .join("");
 }
 
-function paintEvents(report) {
-  const actionNames = {
-    contact_save_contact: "Save Contact",
-    contact_call: "Call",
-    contact_whatsapp: "WhatsApp",
-    contact_email: "Email",
-    contact_linkedin: "LinkedIn",
-    contact_website: "Website",
-    contact_cv: "CV"
-  };
-
-  const actions = [];
-
-  const interests = {
-    low: 0,
-    medium: 0,
-    high: 0
+function paintContactEvents(report) {
+  const counts = {
+    contact_save_contact: 0,
+    contact_email: 0,
+    contact_linkedin: 0
   };
 
   (report.rows || []).forEach((row) => {
-    const name =
-      row.dimensionValues?.[0]?.value || "";
+    const name = row.dimensionValues?.[0]?.value || "";
+    const count = Number(row.metricValues?.[0]?.value || 0);
 
-    const count =
-      Number(row.metricValues?.[0]?.value || 0);
-
-    if (
-      name.startsWith("contact_") &&
-      actionNames[name]
-    ) {
-      actions.push({
-        name,
-        label: actionNames[name],
-        count
-      });
-    }
-
-    if (name === "interest_low") {
-      interests.low += count;
-    }
-
-    if (name === "interest_medium") {
-      interests.medium += count;
-    }
-
-    if (name === "interest_high") {
-      interests.high += count;
+    if (Object.prototype.hasOwnProperty.call(counts, name)) {
+      counts[name] += count;
     }
   });
 
-  const totalActions = actions.reduce(
-    (sum, item) => sum + item.count,
-    0
-  );
-
-  if ($("gaContactActions")) {
-    $("gaContactActions").textContent =
-      number(totalActions);
+  if ($("gaSaveContact")) {
+    $("gaSaveContact").textContent = number(counts.contact_save_contact);
   }
 
-  const actionsContainer = $("gaActions");
-
-  if (actionsContainer) {
-    if (!actions.length) {
-      actionsContainer.className =
-        "analytics-action-list analytics-empty";
-
-      actionsContainer.textContent =
-        "No tracked contact actions yet.";
-    } else {
-      actions.sort((a, b) => b.count - a.count);
-
-      actionsContainer.className =
-        "analytics-action-list";
-
-      actionsContainer.innerHTML = actions
-        .map(
-          (item) => `
-            <div class="analytics-action-row">
-              <span class="analytics-action-label">
-                ${escapeHtml(item.label)}
-              </span>
-              <strong class="analytics-action-value">
-                ${number(item.count)}
-              </strong>
-            </div>
-          `
-        )
-        .join("");
-    }
+  if ($("gaEmailClicks")) {
+    $("gaEmailClicks").textContent = number(counts.contact_email);
   }
 
-  const interestTotal =
-    interests.low +
-    interests.medium +
-    interests.high;
-
-  let level = "No signal yet";
-
-  if (interestTotal) {
-    const weighted =
-      (
-        interests.low +
-        interests.medium * 2 +
-        interests.high * 3
-      ) /
-      interestTotal;
-
-    level =
-      weighted >= 2.35
-        ? "High"
-        : weighted >= 1.55
-          ? "Medium"
-          : "Low";
+  if ($("gaLinkedInClicks")) {
+    $("gaLinkedInClicks").textContent = number(counts.contact_linkedin);
   }
-
-  if ($("gaInterestLevel")) {
-    $("gaInterestLevel").textContent = level;
-  }
-
-  const interestRows = [
-    ["High", interests.high],
-    ["Medium", interests.medium],
-    ["Low", interests.low]
-  ].filter(([, count]) => count > 0);
-
-  const container = $("gaInterestBreakdown");
-
-  if (!container) return;
-
-  if (!interestRows.length) {
-    container.className =
-      "analytics-ranking analytics-empty";
-
-    container.textContent =
-      "No interest events collected yet.";
-
-    return;
-  }
-
-  const max = Math.max(
-    ...interestRows.map(([, count]) => count),
-    1
-  );
-
-  container.className = "analytics-ranking";
-
-  container.innerHTML = interestRows
-    .map(
-      ([label, count]) => `
-        <div class="analytics-rank-row">
-          <span class="analytics-rank-label">
-            ${escapeHtml(label)}
-          </span>
-
-          <strong class="analytics-rank-value">
-            ${number(count)}
-          </strong>
-
-          <div class="analytics-meter">
-            <i style="width:${Math.max(
-              3,
-              (count / max) * 100
-            )}%"></i>
-          </div>
-        </div>
-      `
-    )
-    .join("");
 }
 
-function paintLive(live, countries) {
+function paintReturningVisitors(report) {
+  let returning = 0;
+
+  (report.rows || []).forEach((row) => {
+    const label = (row.dimensionValues?.[0]?.value || "").toLowerCase();
+    const count = Number(row.metricValues?.[0]?.value || 0);
+
+    if (label === "returning") {
+      returning += count;
+    }
+  });
+
+  if ($("gaReturningVisitors")) {
+    $("gaReturningVisitors").textContent = number(returning);
+  }
+}
+
+function paintLive(live) {
   const liveCount = Number(
     live.rows?.[0]?.metricValues?.[0]?.value || 0
   );
 
   if ($("gaLiveUsers")) {
-    $("gaLiveUsers").textContent =
-      number(liveCount);
+    $("gaLiveUsers").textContent = number(liveCount);
   }
-
-  paintRanking(
-    "gaLiveCountries",
-    countries
-  );
 }
 
 function number(value) {
@@ -644,6 +513,16 @@ function number(value) {
   return new Intl.NumberFormat().format(
     Number.isFinite(n) ? n : 0
   );
+}
+
+function percent(value) {
+  const ratio = Number(value || 0);
+
+  if (!Number.isFinite(ratio)) {
+    return "0%";
+  }
+
+  return `${(ratio * 100).toFixed(1)}%`;
 }
 
 function duration(value) {

@@ -244,3 +244,88 @@ textarea { resize: vertical; line-height: 1.5; }
   .analytics-toolbar{align-items:flex-start;flex-direction:column}
   .analytics-setup-grid{grid-template-columns:1fr}
 }
+
+
+/* ===== Clean analytics dashboard v40 ===== */
+.analytics-section-block {
+  margin-top: 22px;
+}
+
+.analytics-section-title {
+  margin-bottom: 12px;
+}
+
+.analytics-section-title h3 {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1b1b1b;
+}
+
+.analytics-kpi-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.analytics-kpi-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.analytics-kpi strong,
+.analytics-rank-value,
+.analytics-action-value,
+.analytics-last-updated,
+.analytics-status-text {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.analytics-kpi strong {
+  font-size: 2rem !important;
+  font-weight: 750 !important;
+  letter-spacing: -0.03em;
+}
+
+.analytics-kpi span,
+.analytics-kpi small,
+.analytics-rank-label,
+.analytics-panel-heading h3,
+.analytics-empty {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.analytics-panel {
+  color: #eef4fb;
+}
+
+.analytics-panel .analytics-rank-label,
+.analytics-panel .analytics-empty {
+  color: #c7d3df;
+}
+
+.analytics-panel .analytics-rank-value {
+  color: #f0d78d;
+}
+
+.analytics-bar-label {
+  writing-mode: horizontal-tb !important;
+  transform: none !important;
+  max-height: none !important;
+  font-size: .68rem !important;
+}
+
+.analytics-bar-chart {
+  min-height: 250px;
+  align-items: flex-end;
+}
+
+.analytics-bar-column {
+  height: 220px;
+}
+
+@media (max-width: 760px) {
+  .analytics-kpi-grid-2,
+  .analytics-kpi-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}

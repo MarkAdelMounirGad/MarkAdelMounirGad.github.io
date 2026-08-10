@@ -184,6 +184,7 @@
         </section>
 
         <section id="analyticsDashboard" class="analytics-dashboard analytics-disabled" aria-busy="false">
+          
           <div class="analytics-toolbar">
             <div class="analytics-range-buttons">
               <button class="analytics-range active" data-days="1" type="button">Today</button>
@@ -197,41 +198,100 @@
             </div>
           </div>
 
-          <div class="analytics-kpi-grid">
-            <article class="analytics-kpi accent"><span>Active users</span><strong id="gaActiveUsers">—</strong><small>Selected period</small></article>
-            <article class="analytics-kpi"><span>Sessions</span><strong id="gaSessions">—</strong><small>Visits</small></article>
-            <article class="analytics-kpi"><span>Page views</span><strong id="gaViews">—</strong><small>Views</small></article>
-            <article class="analytics-kpi"><span>Avg. engagement</span><strong id="gaEngagement">—</strong><small>Per active user</small></article>
-            <article class="analytics-kpi live"><span>Live now</span><strong id="gaLiveUsers">—</strong><small>Last 30 minutes</small></article>
-            <article class="analytics-kpi"><span>Contact actions</span><strong id="gaContactActions">—</strong><small>Total tracked clicks</small></article>
-          </div>
+          <section class="analytics-section-block">
+            <div class="analytics-section-title">
+              <p class="eyebrow">OVERVIEW</p>
+              <h3>Who is viewing your card</h3>
+            </div>
+            <div class="analytics-kpi-grid analytics-kpi-grid-2">
+              <article class="analytics-kpi accent">
+                <span>Unique Visitors</span>
+                <strong id="gaActiveUsers">—</strong>
+                <small>Selected period</small>
+              </article>
+              <article class="analytics-kpi live">
+                <span>Live Now</span>
+                <strong id="gaLiveUsers">—</strong>
+                <small>Last 30 minutes</small>
+              </article>
+            </div>
+          </section>
 
-          <div class="analytics-insight-grid">
-            <article class="analytics-panel analytics-wide">
-              <div class="analytics-panel-heading"><div><p class="eyebrow">TREND</p><h3>Visitors over time</h3></div></div>
+          <section class="analytics-section-block">
+            <div class="analytics-section-title">
+              <p class="eyebrow">ENGAGEMENT</p>
+              <h3>How interested visitors are</h3>
+            </div>
+            <div class="analytics-kpi-grid analytics-kpi-grid-3">
+              <article class="analytics-kpi">
+                <span>Engagement Rate</span>
+                <strong id="gaEngagementRate">—</strong>
+                <small>GA4 engaged sessions</small>
+              </article>
+              <article class="analytics-kpi">
+                <span>Average Engaged Time</span>
+                <strong id="gaEngagement">—</strong>
+                <small>Per active user</small>
+              </article>
+              <article class="analytics-kpi">
+                <span>Returning Visitors</span>
+                <strong id="gaReturningVisitors">—</strong>
+                <small>Visitors who came back</small>
+              </article>
+            </div>
+          </section>
+
+          <section class="analytics-section-block">
+            <div class="analytics-section-title">
+              <p class="eyebrow">CONTACT ACTIVITY</p>
+              <h3>Actions that show professional interest</h3>
+            </div>
+            <div class="analytics-kpi-grid analytics-kpi-grid-3">
+              <article class="analytics-kpi">
+                <span>Save Contact</span>
+                <strong id="gaSaveContact">—</strong>
+                <small>Times contact was saved</small>
+              </article>
+              <article class="analytics-kpi">
+                <span>Email</span>
+                <strong id="gaEmailClicks">—</strong>
+                <small>Email button clicks</small>
+              </article>
+              <article class="analytics-kpi">
+                <span>LinkedIn</span>
+                <strong id="gaLinkedInClicks">—</strong>
+                <small>LinkedIn button clicks</small>
+              </article>
+            </div>
+          </section>
+
+          <section class="analytics-section-block">
+            <div class="analytics-section-title">
+              <p class="eyebrow">AUDIENCE</p>
+              <h3>Where your visitors are coming from</h3>
+            </div>
+            <article class="analytics-panel">
+              <div id="gaCountries" class="analytics-ranking analytics-empty">—</div>
+            </article>
+          </section>
+
+          <section class="analytics-section-block">
+            <div class="analytics-section-title">
+              <p class="eyebrow">TREND</p>
+              <h3>Unique visitors over time</h3>
+            </div>
+            <article class="analytics-panel">
               <div id="gaTrendChart" class="analytics-bar-chart analytics-empty">Connect to load data</div>
             </article>
-            <article class="analytics-panel"><div class="analytics-panel-heading"><div><p class="eyebrow">LOCATION</p><h3>Top countries</h3></div></div><div id="gaCountries" class="analytics-ranking analytics-empty">—</div></article>
-            <article class="analytics-panel"><div class="analytics-panel-heading"><div><p class="eyebrow">TECHNOLOGY</p><h3>Devices</h3></div></div><div id="gaDevices" class="analytics-ranking analytics-empty">—</div></article>
-            <article class="analytics-panel"><div class="analytics-panel-heading"><div><p class="eyebrow">TECHNOLOGY</p><h3>Browsers</h3></div></div><div id="gaBrowsers" class="analytics-ranking analytics-empty">—</div></article>
-            <article class="analytics-panel"><div class="analytics-panel-heading"><div><p class="eyebrow">CONVERSION</p><h3>Contact actions</h3></div></div><div id="gaActions" class="analytics-action-list analytics-empty">—</div></article>
-            <article class="analytics-panel">
-              <div class="analytics-panel-heading"><div><p class="eyebrow">INTEREST</p><h3>Professional interest</h3></div></div>
-              <div class="analytics-interest-box"><strong id="gaInterestLevel">—</strong><span>Based on tracked engagement signals</span></div>
-              <div id="gaInterestBreakdown" class="analytics-ranking analytics-empty">—</div>
-            </article>
-            <article class="analytics-panel">
-              <div class="analytics-panel-heading"><div><p class="eyebrow">REALTIME</p><h3>Live countries</h3></div><span class="analytics-live-dot">LIVE</span></div>
-              <div id="gaLiveCountries" class="analytics-ranking analytics-empty">—</div>
-            </article>
-          </div>
-          <div id="gaErrorPanel" class="analytics-error is-hidden"></div>
+          </section>
+
+<div id="gaErrorPanel" class="analytics-error is-hidden"></div>
         </section>
       </section>
 
     </section>
-  </main>  <script src="admin-config.js?v=30"></script>
-  <script src="admin.js?v=30"></script>
-  <script src="admin-analytics.js?v=30"></script>
+  </main>  <script src="admin-config.js?v=40"></script>
+  <script src="admin.js?v=40"></script>
+  <script src="admin-analytics.js?v=40"></script>
 </body>
 </html>
