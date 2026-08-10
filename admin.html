@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="admin.css?v=50">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
@@ -119,8 +119,8 @@
               <label>Confirm password<input id="confirmPassword" type="password" minlength="6"></label>
             </div>
             <button id="changePasswordButton" class="secondary-button" type="button">Change password</button>
-            <button id="downloadConfigButton" class="ghost-button full-button" type="button">Download persistent admin-config.js</button>
-            <p class="hint">Changing the password here applies immediately on this browser. Download and replace <strong>admin-config.js</strong> in GitHub if you want the new password and Analytics settings to become the permanent defaults on every device.</p>
+            <button id="downloadConfigButton" class="ghost-button full-button" type="button">Download persistent admin-config.js?v=50</button>
+            <p class="hint">Changing the password here applies immediately on this browser. Download and replace <strong>admin-config.js?v=50</strong> in GitHub if you want the new password and Analytics settings to become the permanent defaults on every device.</p>
             <p id="passwordMessage" class="form-message" aria-live="polite"></p>
           </section>
         </form>
@@ -201,7 +201,7 @@
           <section class="analytics-section-block">
             <div class="analytics-section-title">
               <p class="eyebrow">OVERVIEW</p>
-              <h3>Who is viewing your card</h3>
+              <h3>At a glance</h3>
             </div>
             <div class="analytics-kpi-grid analytics-kpi-grid-2">
               <article class="analytics-kpi accent">
@@ -220,7 +220,7 @@
           <section class="analytics-section-block">
             <div class="analytics-section-title">
               <p class="eyebrow">ENGAGEMENT</p>
-              <h3>How interested visitors are</h3>
+              <h3>How visitors engage with your card</h3>
             </div>
             <div class="analytics-kpi-grid analytics-kpi-grid-3">
               <article class="analytics-kpi">
@@ -244,7 +244,7 @@
           <section class="analytics-section-block">
             <div class="analytics-section-title">
               <p class="eyebrow">CONTACT ACTIVITY</p>
-              <h3>Actions that show professional interest</h3>
+              <h3>Actions visitors take</h3>
             </div>
             <div class="analytics-kpi-grid analytics-kpi-grid-3">
               <article class="analytics-kpi">
@@ -268,7 +268,7 @@
           <section class="analytics-section-block">
             <div class="analytics-section-title">
               <p class="eyebrow">AUDIENCE</p>
-              <h3>Where your visitors are coming from</h3>
+              <h3>Top countries</h3>
             </div>
             <article class="analytics-panel">
               <div id="gaCountries" class="analytics-ranking analytics-empty">—</div>
@@ -290,8 +290,8 @@
       </section>
 
     </section>
-  </main>  <script src="admin-config.js?v=40"></script>
-  <script src="admin.js?v=40"></script>
-  <script src="admin-analytics.js?v=40"></script>
+  </main>  <script src="admin-config.js?v=50"></script>
+  <script src="admin.js?v=50"></script>
+  <script src="admin-analytics.js?v=50"></script>
 </body>
 </html>

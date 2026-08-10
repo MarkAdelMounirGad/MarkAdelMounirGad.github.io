@@ -358,9 +358,9 @@ function paintTrend(report) {
 
   if (!rows.length) {
     container.className =
-      "analytics-bar-chart analytics-empty";
+      "analytics-line-chart analytics-empty";
     container.textContent =
-      "No data for this period yet.";
+      "No visitor data for this period yet.";
     return;
   }
 
@@ -369,36 +369,98 @@ function paintTrend(report) {
     value: Number(row.metricValues?.[0]?.value || 0)
   }));
 
-  const max = Math.max(
-    ...points.map((p) => p.value),
-    1
-  );
+  const maxValue = Math.max(...points.map((p) => p.value), 1);
 
-  container.className = "analytics-bar-chart";
+  const width = 900;
+  const height = 210;
+  const padLeft = 40;
+  const padRight = 18;
+  const padTop = 20;
+  const padBottom = 36;
 
-  container.innerHTML = points
-    .map((point) => {
-      const h = Math.max(
-        2,
-        Math.round((point.value / max) * 180)
-      );
+  const plotWidth = width - padLeft - padRight;
+  const plotHeight = height - padTop - padBottom;
 
-      const label = formatDate(point.date);
+  const coords = points.map((point, index) => {
+    const x =
+      points.length === 1
+        ? padLeft + plotWidth / 2
+        : padLeft + (index / (points.length - 1)) * plotWidth;
+
+    const y =
+      padTop + plotHeight -
+      (point.value / maxValue) * plotHeight;
+
+    return {
+      ...point,
+      x,
+      y
+    };
+  });
+
+  const path = coords
+    .map((point, index) =>
+      `${index === 0 ? "M" : "L"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`
+    )
+    .join(" ");
+
+  const areaPath =
+    `${path} L ${coords[coords.length - 1].x.toFixed(1)} ${(padTop + plotHeight).toFixed(1)}` +
+    ` L ${coords[0].x.toFixed(1)} ${(padTop + plotHeight).toFixed(1)} Z`;
+
+  const yTicks = 4;
+  const gridLines = Array.from({ length: yTicks + 1 }, (_, i) => {
+    const y = padTop + (i / yTicks) * plotHeight;
+    const value = Math.round(maxValue * (1 - i / yTicks));
+
+    return `
+      <line x1="${padLeft}" y1="${y}" x2="${width - padRight}" y2="${y}"
+        class="analytics-chart-grid"/>
+      <text x="${padLeft - 12}" y="${y + 4}" text-anchor="end"
+        class="analytics-chart-axis">${value}</text>
+    `;
+  }).join("");
+
+  const labelStep = Math.max(1, Math.ceil(points.length / 6));
+  const xLabels = coords
+    .map((point, index) => {
+      if (
+        index !== 0 &&
+        index !== coords.length - 1 &&
+        index % labelStep !== 0
+      ) {
+        return "";
+      }
 
       return `
-        <div class="analytics-bar-column">
-          <div
-            class="analytics-bar"
-            style="height:${h}px"
-            data-tip="${escapeHtml(label)} · ${point.value} users">
-          </div>
-          <span class="analytics-bar-label">
-            ${escapeHtml(label)}
-          </span>
-        </div>
+        <text x="${point.x}" y="${height - 10}" text-anchor="middle"
+          class="analytics-chart-axis">
+          ${escapeHtml(formatDate(point.date))}
+        </text>
       `;
     })
     .join("");
+
+  const dots = coords
+    .map((point) => `
+      <circle cx="${point.x}" cy="${point.y}" r="4"
+        class="analytics-chart-dot">
+        <title>${escapeHtml(formatDate(point.date))}: ${point.value} unique visitors</title>
+      </circle>
+    `)
+    .join("");
+
+  container.className = "analytics-line-chart";
+  container.innerHTML = `
+    <svg viewBox="0 0 ${width} ${height}" role="img"
+      aria-label="Unique visitors over time">
+      ${gridLines}
+      <path d="${areaPath}" class="analytics-chart-area"></path>
+      <path d="${path}" class="analytics-chart-line"></path>
+      ${dots}
+      ${xLabels}
+    </svg>
+  `;
 }
 
 function paintRanking(id, report) {
@@ -410,7 +472,7 @@ function paintRanking(id, report) {
   if (!rows.length) {
     container.className =
       "analytics-ranking analytics-empty";
-    container.textContent = "No data yet.";
+    container.textContent = "No country data yet.";
     return;
   }
 
@@ -418,30 +480,42 @@ function paintRanking(id, report) {
     Number(row.metricValues?.[0]?.value || 0)
   );
 
+  const total = values.reduce((sum, value) => sum + value, 0);
   const max = Math.max(...values, 1);
 
   container.className = "analytics-ranking";
 
   container.innerHTML = rows
     .map((row, i) => {
-      const label =
+      const rawLabel =
         row.dimensionValues?.[0]?.value || "(not set)";
 
+      const label =
+        rawLabel === "(not set)" || !rawLabel
+          ? "Location unavailable"
+          : rawLabel;
+
       const value = values[i];
+      const share = total > 0 ? (value / total) * 100 : 0;
 
       return `
         <div class="analytics-rank-row">
-          <span class="analytics-rank-label">
-            ${escapeHtml(label)}
-          </span>
+          <div class="analytics-rank-topline">
+            <span class="analytics-rank-label">
+              ${escapeHtml(label)}
+            </span>
 
-          <strong class="analytics-rank-value">
-            ${number(value)}
-          </strong>
+            <strong class="analytics-rank-value">
+              ${number(value)}
+              <span class="analytics-rank-percent">
+                (${share.toFixed(1)}%)
+              </span>
+            </strong>
+          </div>
 
           <div class="analytics-meter">
             <i style="width:${Math.max(
-              3,
+              4,
               (value / max) * 100
             )}%"></i>
           </div>

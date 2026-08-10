@@ -329,3 +329,307 @@ textarea { resize: vertical; line-height: 1.5; }
     grid-template-columns: 1fr;
   }
 }
+
+
+/* =========================================================
+   PREMIUM ANALYTICS UI v50
+   Light executive dashboard matching the approved mockup.
+========================================================= */
+
+#analyticsView {
+  --analytics-bg: #fbfaf7;
+  --analytics-card: #ffffff;
+  --analytics-text: #172033;
+  --analytics-muted: #6f7887;
+  --analytics-line: #e6e1d8;
+  --analytics-gold: #d5aa42;
+  --analytics-gold-dark: #9b6d08;
+  --analytics-green: #19a963;
+  --analytics-soft-gold: #fff8e4;
+  color: var(--analytics-text);
+}
+
+#analyticsView .analytics-admin-heading h2,
+#analyticsView .analytics-section-title h3,
+#analyticsView .analytics-kpi strong,
+#analyticsView .analytics-kpi span,
+#analyticsView .analytics-kpi small,
+#analyticsView .analytics-rank-label,
+#analyticsView .analytics-rank-value,
+#analyticsView .analytics-status-text,
+#analyticsView .analytics-last-updated,
+#analyticsView .analytics-range,
+#analyticsView .ghost-button,
+#analyticsView .primary-button,
+#analyticsView input,
+#analyticsView p,
+#analyticsView details,
+#analyticsView summary {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important;
+}
+
+#analyticsView .analytics-admin-heading h2 {
+  color: var(--analytics-text);
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+#analyticsView .analytics-admin-heading .muted,
+#analyticsView .analytics-setup-panel .muted {
+  color: var(--analytics-muted) !important;
+}
+
+#analyticsView .eyebrow {
+  color: var(--analytics-gold-dark) !important;
+  letter-spacing: .12em;
+  font-weight: 800;
+}
+
+/* Setup panel */
+#analyticsView .analytics-setup-panel {
+  background: var(--analytics-card) !important;
+  border: 1px solid var(--analytics-line) !important;
+  box-shadow: 0 8px 28px rgba(28, 36, 51, .05) !important;
+}
+
+#analyticsView .analytics-setup-panel h3,
+#analyticsView .analytics-setup-panel label,
+#analyticsView .analytics-setup-panel summary {
+  color: var(--analytics-text) !important;
+}
+
+#analyticsView .analytics-setup-panel input {
+  background: #fff !important;
+  color: var(--analytics-text) !important;
+  border: 1px solid #d7dbe1 !important;
+}
+
+#analyticsView .analytics-setup-panel input:focus {
+  border-color: var(--analytics-gold) !important;
+  box-shadow: 0 0 0 3px rgba(213,170,66,.13);
+}
+
+#analyticsView .analytics-status-text.connected {
+  color: var(--analytics-green) !important;
+}
+
+/* Toolbar */
+#analyticsView .analytics-toolbar {
+  margin-top: 22px;
+  margin-bottom: 22px;
+}
+
+#analyticsView .analytics-range {
+  color: #626b77 !important;
+  background: #fff !important;
+  border: 1px solid var(--analytics-line) !important;
+  font-weight: 650;
+}
+
+#analyticsView .analytics-range.active {
+  color: var(--analytics-gold-dark) !important;
+  background: var(--analytics-soft-gold) !important;
+  border-color: var(--analytics-gold) !important;
+  box-shadow: 0 3px 12px rgba(213,170,66,.12);
+}
+
+#analyticsView #gaRefreshButton {
+  background: #fff !important;
+  color: var(--analytics-text) !important;
+  border: 1px solid var(--analytics-line) !important;
+  font-weight: 700;
+}
+
+#analyticsView .analytics-last-updated {
+  color: #8a93a1 !important;
+}
+
+/* Section labels */
+#analyticsView .analytics-section-block {
+  margin-top: 30px;
+}
+
+#analyticsView .analytics-section-title {
+  margin-bottom: 14px;
+}
+
+#analyticsView .analytics-section-title h3 {
+  color: var(--analytics-text) !important;
+  font-size: 1rem !important;
+  font-weight: 750 !important;
+  letter-spacing: -0.01em;
+}
+
+/* KPI cards */
+#analyticsView .analytics-kpi-grid {
+  gap: 16px !important;
+}
+
+#analyticsView .analytics-kpi {
+  min-height: 128px !important;
+  background: var(--analytics-card) !important;
+  color: var(--analytics-text) !important;
+  border: 1px solid var(--analytics-line) !important;
+  box-shadow: 0 6px 22px rgba(28, 36, 51, .045) !important;
+  border-radius: 14px !important;
+  padding: 20px !important;
+}
+
+#analyticsView .analytics-kpi.accent {
+  background: var(--analytics-card) !important;
+  border-color: var(--analytics-line) !important;
+}
+
+#analyticsView .analytics-kpi span {
+  color: #5c6675 !important;
+  font-size: .82rem !important;
+  font-weight: 650;
+}
+
+#analyticsView .analytics-kpi strong {
+  color: var(--analytics-text) !important;
+  font-size: 2.05rem !important;
+  font-weight: 800 !important;
+  line-height: 1.05;
+  margin: 8px 0 7px !important;
+}
+
+#analyticsView .analytics-kpi.live strong {
+  color: var(--analytics-green) !important;
+}
+
+#analyticsView .analytics-kpi small {
+  color: var(--analytics-muted) !important;
+  font-size: .76rem !important;
+}
+
+/* Audience and trend cards */
+#analyticsView .analytics-panel {
+  background: var(--analytics-card) !important;
+  color: var(--analytics-text) !important;
+  border: 1px solid var(--analytics-line) !important;
+  box-shadow: 0 6px 22px rgba(28, 36, 51, .045) !important;
+  border-radius: 14px !important;
+  padding: 22px !important;
+}
+
+#analyticsView .analytics-ranking {
+  gap: 18px !important;
+}
+
+#analyticsView .analytics-rank-row {
+  display: block !important;
+}
+
+#analyticsView .analytics-rank-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+#analyticsView .analytics-rank-label {
+  color: var(--analytics-text) !important;
+  font-size: .9rem !important;
+  font-weight: 650;
+}
+
+#analyticsView .analytics-rank-value {
+  color: var(--analytics-text) !important;
+  font-size: .9rem !important;
+  font-weight: 800;
+}
+
+#analyticsView .analytics-rank-percent {
+  color: var(--analytics-muted) !important;
+  font-size: .78rem;
+  font-weight: 600;
+}
+
+#analyticsView .analytics-meter {
+  height: 6px !important;
+  background: #eceff3 !important;
+  border-radius: 999px !important;
+}
+
+#analyticsView .analytics-meter i {
+  background: linear-gradient(90deg, #e8c96e, var(--analytics-gold)) !important;
+  border-radius: 999px !important;
+}
+
+/* Compact line chart */
+#analyticsView .analytics-line-chart {
+  width: 100%;
+  min-height: 0 !important;
+  height: 250px !important;
+  overflow: hidden;
+}
+
+#analyticsView .analytics-line-chart svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#analyticsView .analytics-chart-grid {
+  stroke: #eceff2;
+  stroke-width: 1;
+}
+
+#analyticsView .analytics-chart-axis {
+  fill: #8b93a0;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 11px;
+}
+
+#analyticsView .analytics-chart-line {
+  fill: none;
+  stroke: var(--analytics-gold);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+#analyticsView .analytics-chart-area {
+  fill: rgba(213,170,66,.10);
+}
+
+#analyticsView .analytics-chart-dot {
+  fill: var(--analytics-gold);
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+/* Error */
+#analyticsView .analytics-error {
+  background: #fff2f2 !important;
+  border-color: #f0c8c8 !important;
+  color: #a83333 !important;
+}
+
+/* Main editor header buttons */
+.header-actions .ghost-button {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif !important;
+  font-weight: 700;
+}
+
+/* Make the whole analytics area feel like one white SaaS dashboard */
+#analyticsView {
+  background: transparent;
+}
+
+@media (max-width: 760px) {
+  #analyticsView .analytics-admin-heading h2 {
+    font-size: 1.85rem;
+  }
+
+  #analyticsView .analytics-line-chart {
+    height: 220px !important;
+  }
+
+  #analyticsView .analytics-rank-topline {
+    align-items: flex-start;
+  }
+}
